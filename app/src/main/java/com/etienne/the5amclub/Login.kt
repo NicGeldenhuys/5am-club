@@ -88,7 +88,6 @@ class LogIn : ComponentActivity() {
                     viewModel
 
                     //Swapping the intent makes the login screen go away
-                    //Ultimately a temp solution, unless we decide not to fix
                     val intent = Intent(this@LogIn, MainActivity::class.java)
                     startActivity(intent)
                     MainScreen()

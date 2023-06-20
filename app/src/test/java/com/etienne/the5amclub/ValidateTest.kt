@@ -2,16 +2,8 @@ package com.etienne.the5amclub
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.MockedConstruction
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 internal class ValidateTest {
-    @Mock
-    private lateinit var mockContext: MockedConstruction.Context
-
     @Test
     fun validateEmail() {
         assertEquals(true, validateEmail("ryankok@gmail.com"))
@@ -33,7 +25,6 @@ internal class ValidateTest {
                 return true
             }
         }
-
         return false
     }
 
@@ -47,8 +38,6 @@ internal class ValidateTest {
                 }
             }
         }
-
-
         return false
     }
 }

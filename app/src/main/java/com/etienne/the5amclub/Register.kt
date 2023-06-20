@@ -44,6 +44,7 @@ import com.google.firebase.ktx.Firebase
 class Register : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var userRef: DatabaseReference
+    private lateinit var validate: Validate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,13 +74,6 @@ class Register : ComponentActivity() {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 // Sign in success
-                val user = Firebase.auth.currentUser
-                val token = user?.getIdToken(false)
-                Toast.makeText(
-                    baseContext,
-                    "$token!",
-                    Toast.LENGTH_SHORT,
-                ).show()
 
                 addUserToRealtime(firstname, email)
 
@@ -102,7 +96,6 @@ class Register : ComponentActivity() {
                 Toast.LENGTH_SHORT,
             ).show()
         }
-
     }
 
 
@@ -235,10 +228,30 @@ class Register : ComponentActivity() {
                         ) {
                             Button(
                                 onClick = {
-                                    userCreation(inputEmail, inputPassword, inputFullName)
-                                    inputEmail = ""
-                                    inputPassword = ""
-                                    inputFullName = ""
+                                    if (validate.validateEmail(inputEmail)) {
+                                        if (validate.validatePassword(inputPassword)) {
+                                            userCreation(inputEmail, inputPassword, inputFullName)
+                                            //Clears user inputs from the screen
+                                            inputEmail = ""
+                                            inputPassword = ""
+                                            inputFullName = ""
+                                        } else {
+                                            Toast.makeText(
+                                                baseContext,
+                                                "Password was incorrect.",
+                                                Toast.LENGTH_SHORT,
+                                            ).show()
+                                            inputPassword = ""
+                                        }
+                                    } else {
+                                        Toast.makeText(
+                                            baseContext,
+                                            "Email was incorrect.",
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                        inputEmail = ""
+                                        inputPassword = ""
+                                    }
                                 }, modifier = Modifier.size(width = 250.dp, height = 50.dp)
                             ) {
                                 Text(text = "Sign Up", fontSize = 25.sp)
