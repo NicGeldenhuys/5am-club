@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.etienne.the5amclub.ui.theme.AppTheme
-
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -63,6 +62,7 @@ fun BasicEvent(
     event: Event,
     modifier: Modifier = Modifier,
 ) {
+  
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -71,7 +71,11 @@ fun BasicEvent(
             .padding(4.dp)
     ) {
         Text(
-            text = "${event.start.format(EventTimeFormatter)} - ${event.end.format(EventTimeFormatter)}",
+            text = "${event.start.format(EventTimeFormatter)} - ${
+                event.end.format(
+                    EventTimeFormatter
+                )
+            }",
             style = MaterialTheme.typography.caption,
         )
 
@@ -96,15 +100,15 @@ val sampleEvents = listOf(
     Event(
         name = "Google I/O Keynote",
         color = Color(0xFFAFBBF2),
-        start = LocalDateTime.parse("2021-05-18T09:00:00"),
-        end = LocalDateTime.parse("2021-05-18T11:00:00"),
+        start = LocalDateTime.parse("2023-06-30T09:00:00"),
+        end = LocalDateTime.parse("2023-06-30T11:00:00"),
         description = "Tune in to find out about how we're furthering our mission to organize the world’s information and make it universally accessible and useful.",
     ),
     Event(
         name = "Developer Keynote",
         color = Color(0xFFAFBBF2),
-        start = LocalDateTime.parse("2021-05-18T11:15:00"),
-        end = LocalDateTime.parse("2021-05-18T12:15:00"),
+        start = LocalDateTime.parse("2023-07-01T11:15:00"),
+        end = LocalDateTime.parse("2023-07-01T12:15:00"),
         description = "Learn about the latest updates to our developer products and platforms from Google Developers.",
     ),
     Event(
@@ -129,10 +133,17 @@ val sampleEvents = listOf(
         description = "Learn about the latest design improvements to help you build personal dynamic experiences with Material Design.",
     ),
     Event(
-        name = "Jetpack Compose Basics",
+        name = "Foo Compose Basics",
         color = Color(0xFF1B998B),
         start = LocalDateTime.parse("2021-05-20T12:00:00"),
         end = LocalDateTime.parse("2021-05-20T13:00:00"),
+        description = "This Workshop will take you through the basics of building your first app with Jetpack Compose, Android's new modern UI toolkit that simplifies and accelerates UI development on Android.",
+    ),
+    Event(
+        name = "Bar Compose Basics",
+        color = Color(0xFF1B998B),
+        start = LocalDateTime.parse("2021-05-21T12:00:00"),
+        end = LocalDateTime.parse("2021-05-21T13:00:00"),
         description = "This Workshop will take you through the basics of building your first app with Jetpack Compose, Android's new modern UI toolkit that simplifies and accelerates UI development on Android.",
     ),
 )
@@ -243,8 +254,9 @@ fun ScheduleSidebar(
     label: @Composable (time: LocalTime) -> Unit = { BasicSidebarLabel(time = it) },
 ) {
     Column(modifier = modifier) {
-        val startTime = LocalTime.MIN
-        repeat(24) { i ->
+        var startTime = LocalTime.MIN
+        startTime = startTime.plusHours(5)
+        repeat(19) { i ->
             Box(modifier = Modifier.height(hourHeight)) {
                 label(startTime.plusHours(i.toLong()))
             }
@@ -266,8 +278,10 @@ fun Schedule(
     modifier: Modifier = Modifier,
     eventContent: @Composable (event: Event) -> Unit = { BasicEvent(event = it) },
     dayHeader: @Composable (day: LocalDate) -> Unit = { BasicDayHeader(day = it) },
-    minDate: LocalDate = events.minByOrNull(Event::start)!!.start.toLocalDate(),
-    maxDate: LocalDate = events.maxByOrNull(Event::end)!!.end.toLocalDate(),
+    //minDate: LocalDate = events.minByOrNull(Event::start)!!.start.toLocalDate(),
+    //maxDate: LocalDate = events.maxByOrNull(Event::end)!!.end.toLocalDate(),
+    minDate: LocalDate = LocalDate.now(),
+    maxDate: LocalDate = LocalDate.now().plusDays(7),
 ) {
     val dayWidth = 256.dp
     val hourHeight = 64.dp
@@ -312,8 +326,8 @@ fun BasicSchedule(
     events: List<Event>,
     modifier: Modifier = Modifier,
     eventContent: @Composable (event: Event) -> Unit = { BasicEvent(event = it) },
-    minDate: LocalDate = events.minByOrNull(Event::start)!!.start.toLocalDate(),
-    maxDate: LocalDate = events.maxByOrNull(Event::end)!!.end.toLocalDate(),
+    minDate: LocalDate = LocalDate.now(),
+    maxDate: LocalDate = LocalDate.now().plusDays(6),
     dayWidth: Dp,
     hourHeight: Dp,
 ) {
@@ -337,7 +351,7 @@ fun BasicSchedule(
                         strokeWidth = 1.dp.toPx()
                     )
                 }
-                repeat(numDays - 1) {
+                repeat(numDays) {
                     drawLine(
                         dividerColor,
                         start = Offset((it + 1) * dayWidth.toPx(), 0f),

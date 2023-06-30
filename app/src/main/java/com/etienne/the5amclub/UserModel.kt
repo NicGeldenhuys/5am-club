@@ -1,7 +1,6 @@
 package com.etienne.the5amclub
 
 import android.util.Log
-import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -28,7 +27,7 @@ class UserModel(
 
     private suspend fun getCurrentRealtimeUser(email: String): UserModel {
         userRef =
-            Firebase.database("https://the5amclub-dfb7f-default-rtdb.europe-west1.firebasedatabase.app")
+            Firebase.database("https://the5amclub-dfb7f-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users")
 
 
