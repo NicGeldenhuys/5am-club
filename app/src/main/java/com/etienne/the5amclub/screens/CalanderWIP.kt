@@ -62,7 +62,7 @@ fun BasicEvent(
     event: Event,
     modifier: Modifier = Modifier,
 ) {
-  
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -288,6 +288,9 @@ fun Schedule(
     val verticalScrollState = rememberScrollState()
     val horizontalScrollState = rememberScrollState()
     var sidebarWidth by remember { mutableStateOf(0) }
+
+    //TODO Add events from the database here
+
     Column(modifier = modifier) {
         ScheduleHeader(
             minDate = minDate,
