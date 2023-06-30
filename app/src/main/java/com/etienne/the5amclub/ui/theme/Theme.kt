@@ -1,6 +1,7 @@
 package com.etienne.the5amclub.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Shapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
@@ -88,3 +89,22 @@ fun AppTheme(
     content = content
   )
 }
+/*
+@Composable
+fun WeekScheduleTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable() () -> Unit
+) {
+    val colors = if (darkTheme) {
+        DarkColors
+    } else {
+        LightColors
+    }
+
+    MaterialTheme(
+        colors = colors,
+        typography = Typography,
+        shapes = Shapes,
+        content = content
+    )
+}*/

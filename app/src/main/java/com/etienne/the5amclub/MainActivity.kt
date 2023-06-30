@@ -7,6 +7,12 @@ import android.os.Looper
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import com.etienne.the5amclub.screens.HomeScreen
+import com.etienne.the5amclub.screens.Schedule
+import com.etienne.the5amclub.screens.sampleEvents
+import com.etienne.the5amclub.ui.theme.AppTheme
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -35,15 +41,24 @@ class MainActivity : ComponentActivity() {
         }, 2000)
         //Testing Code END
 
-
-
         setContent {
-            //TODO Add back BottomNavBarTheme
-            //BottomNavBarTheme {
-                Log.d("FirebaseInitialize","Just Before MainScreen Called")
+            AppTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(color = MaterialTheme.colors.background) {
+                    Schedule(events = sampleEvents)
+                }
+            }
+
+
+            setContent {
+                //TODO Add back BottomNavBarTheme
+                //BottomNavBarTheme {
+                Log.d("FirebaseInitialize", "Just Before MainScreen Called")
                 val user = Firebase.auth.currentUser
                 MainScreen(user)
-            //}
+                //}
+            }
         }
     }
 }
+
